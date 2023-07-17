@@ -5,11 +5,9 @@ import kr.ac.wku.dto.ArticleCreateDTO;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 public class Article {
 
