@@ -7,6 +7,7 @@ import kr.ac.wku.configuration.WonkwangAPI;
 import kr.ac.wku.dto.UserLoginData;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,8 @@ public class UserController {
         return ResponseEntity.ok().body(wonkwangAPI.getName(line) + "(" + wonkwangAPI.getStudentNumber(line) + ")");
     }
 
-    @PostMapping("/auth/timetable")
-    public ResponseEntity<Object> getTimetable(HttpServletRequest request) throws IOException {
+    @GetMapping("/auth/subjects")
+    public ResponseEntity<Object> getSubjects(HttpServletRequest request) throws IOException {
         String cookies = (String) sessionManager.getSession(request);
         if(cookies == null) return ResponseEntity.status(401).body("로그인이 필요합니다.");
         return ResponseEntity.ok().body(wonkwangAPI.getSubjects(cookies));
@@ -37,5 +38,19 @@ public class UserController {
     @PostMapping("/auth/signout")
     public void signOut(HttpServletRequest request){
         sessionManager.expireCookie(request);
+    }
+
+    @GetMapping("/auth/today")
+    public ResponseEntity<Object> getTodayTimetable(HttpServletRequest request) throws IOException {
+        String cookies = (String) sessionManager.getSession(request);
+        if(cookies == null) return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        return ResponseEntity.ok().body(wonkwangAPI.getTodayTimetable(wonkwangAPI.getSubjects(cookies)));
+    }
+
+    @GetMapping("/auth/timetable")
+    public ResponseEntity<Object> getAllTimetable(HttpServletRequest request) throws IOException {
+        String cookies = (String) sessionManager.getSession(request);
+        if(cookies == null) return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        return ResponseEntity.ok().body(wonkwangAPI.getTimetable(wonkwangAPI.getSubjects(cookies)));
     }
 }

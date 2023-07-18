@@ -126,10 +126,38 @@ public class WonkwangAPI {
         }
 
 
-        String cookie = "";
+        StringBuilder cookie = new StringBuilder();
         for(String key : cookiemap.keySet()) {
-            cookie += String.format("%s=%s;", key, cookiemap.get(key));
+            cookie.append(String.format("%s=%s;", key, cookiemap.get(key)));
         }
-        return cookie;
+        return cookie.toString();
+    }
+
+    public Subject[][] getTimetable(Subject[] subjects){
+        Subject[][] table = new Subject[5][9];
+        String[] day = new String[]{"월","화","수","목","금"};
+        for(Subject subject : subjects){
+            String time = subject.getTime();
+            for(int dc = 0; dc < 5; dc ++){
+                int index = time.indexOf(day[dc]);
+                if(index > -1){
+                    index++;
+                    while(Character.toString(time.charAt(index)).matches("[0-9]+")){
+                        table[dc][time.charAt(index)-'0'-1] = subject;
+                        index++;
+                        if(index >= time.length()) break;
+                    }
+                }
+            }
+        }
+        return table;
+    }
+
+    public Subject[] getTodayTimetable(Subject[] subjects){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        if(day == Calendar.SUNDAY || day == Calendar.SATURDAY) return new Subject[]{};
+        return getTimetable(subjects)[day-2];
     }
 }

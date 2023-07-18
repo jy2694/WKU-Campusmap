@@ -1,23 +1,23 @@
-### Authentication
+### User
 
-* SignIn
+* Sign In
   * URL : /auth/signin
   * Method : POST
   * Parameter : ID, PW
   * Return : Name(StudentId)
     * 실패 시 401 Unauthenticated 상태코드 반환
     * 로그인 성공 시 이름과 학번 반환
-* SignOut
+* Sign Out
   * URL : /auth/signout
   * Method : POST
   * Parameter : -
   * Return : -
     * 호출 시 세션 만료.
-* getTimetable
-  * URL : /auth/timetable
-  * Method : POST
+* Get Subjects
+  * URL : /auth/subjects
+  * Method : GET
   * Parameter : -
-  * Return : JSON LIST
+  * Return : Subject List
     * 로그인 되어있지 않은 경우 401 Unauthenticated 상태코드 반환
     * 과목 객체를 리스트 형태로 반환 객체 내부의 값은 아래와 같음.
 
@@ -32,6 +32,22 @@
       | prof          | 교수명                     |
       | studentNumber | 수강인원                    |
       | locations     | 강의실(List 형식 반환)         |
+
+* Get TimeTable
+  * URL : /auth/timetable
+  * Method : GET
+  * Parameter : -
+  * Return : Two-dimensional Subject Array
+    * 로그인 되어있지 않은 경우 401 Unauthenticated 상태코드 반환
+    * 행은 요일 번호(월요일;0번 ~ 금요일;4번), 열은 교시 번호(1교시;0번 ~ 9교시;8번)
+
+* Get Today Timetable
+  * URL : /auth/today
+  * Method : GET
+  * Parameter : -
+  * Return : Subject Array
+    * 로그인 되어있지 않은 경우 401 Unauthenticated 상태코드 반환
+    * Index는 교시 번호(1교시;0번 ~ 9교시;8번)
 
 ***
 
