@@ -7,7 +7,7 @@
 ## 개발자
 
 * 김제연
-  * 역할 : Back-End Developer
+  * 역할 : Back-End Developer, PM
   * 소속 : 원광대학교 컴퓨터소프트웨어공학과
 * 김혁
   * 역할 : Back-End Developer
